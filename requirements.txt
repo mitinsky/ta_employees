@@ -12,6 +12,8 @@ django==4.2
     # via
     #   -r requirements.in
     #   djangorestframework
+django-environ==0.10.0
+    # via -r requirements.in
 djangorestframework==3.14.0
     # via -r requirements.in
 exceptiongroup==1.1.1
