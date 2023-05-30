@@ -22,6 +22,8 @@ iniconfig==2.0.0
     # via pytest
 packaging==23.1
     # via pytest
+pillow==9.5.0
+    # via -r requirements.in
 pluggy==1.0.0
     # via pytest
 psycopg2-binary==2.9.6
