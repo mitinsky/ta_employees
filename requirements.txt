@@ -18,6 +18,14 @@ djangorestframework==3.14.0
     # via -r requirements.in
 exceptiongroup==1.1.1
     # via pytest
+factory-boy==3.2.1
+    # via
+    #   -r requirements.in
+    #   pytest-factoryboy
+faker==18.9.0
+    # via factory-boy
+inflection==0.5.1
+    # via pytest-factoryboy
 iniconfig==2.0.0
     # via pytest
 packaging==23.1
@@ -32,13 +40,22 @@ pytest==7.2.2
     # via
     #   -r requirements.in
     #   pytest-django
+    #   pytest-factoryboy
 pytest-django==4.5.2
     # via -r requirements.in
+pytest-factoryboy==2.5.1
+    # via -r requirements.in
+python-dateutil==2.8.2
+    # via faker
 pytz==2023.3
     # via djangorestframework
+six==1.16.0
+    # via python-dateutil
 sqlparse==0.4.4
     # via django
 tomli==2.0.1
     # via pytest
 typing-extensions==4.6.2
-    # via asgiref
+    # via
+    #   asgiref
+    #   pytest-factoryboy
