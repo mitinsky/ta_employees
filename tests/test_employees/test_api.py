@@ -29,4 +29,6 @@ class TestEmployeesEndpoints:
         response = client.get(reverse(self.url_list))
 
         assert response.status_code == status.HTTP_200_OK
-        assert len(response.data) == 20
+        assert response.data['count'] == 20
+        # test pagination
+        assert len(response.data['results']) == 10
