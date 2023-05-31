@@ -10,6 +10,16 @@ from apps.employees import models
 faker = Faker('ru_Ru')
 
 
+class UserFactory(factory.django.DjangoModelFactory):
+    username = factory.LazyAttribute(lambda x: faker.user_name())
+    email = factory.LazyAttribute(lambda x: faker.email())
+    plaintext_password = factory.PostGenerationMethodCall('set_password', 'password')
+
+    class Meta:
+        model = get_user_model()
+        exclude = ['plaintext_password']
+
+
 class DepartmentFactory(factory.django.DjangoModelFactory):
     title = factory.LazyAttribute(lambda x: faker.company())
 
