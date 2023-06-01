@@ -8,7 +8,7 @@ class Employee(models.Model):
     salary = models.DecimalField(decimal_places=2, max_digits=11)
     # TODO лучше хранить дату рождения чем возраст
     birthday = models.DateField()
-    department = models.ForeignKey('Department', on_delete=models.PROTECT)
+    department = models.ForeignKey('Department', on_delete=models.PROTECT, related_name='employees')
 
     def __str__(self):
         return self.name
