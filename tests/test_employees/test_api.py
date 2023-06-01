@@ -52,6 +52,14 @@ def batch_employees_second_dep(employee_factory, department_second):
     return employee_factory.create_batch(20, department=department_second)
 
 @pytest.fixture
+def batch_20_employee_salary_100_dep1(employee_factory, department_first):
+    return employee_factory.create_batch(20, salary=100, department=department_first)
+
+@pytest.fixture
+def batch_30_employee_salary_200_dep2(employee_factory, department_second):
+    return employee_factory.create_batch(30, salary=200, department=department_second)
+
+@pytest.fixture
 def target_employee(batch_employees_20):
     return random.choice(batch_employees_20)
 
@@ -118,8 +126,15 @@ class TestEmployeesEndpoints:
 class TestDepartmentEndpoints:
     url_list = 'department-list'
 
-    def test_list_department(self, client, batch_departments_20):
+    def test_list_department(
+            self,
+            client,
+            batch_20_employee_salary_100_dep1,
+            batch_30_employee_salary_200_dep2,
+        ):
         response = client.get(reverse(self.url_list))
 
         assert response.status_code == status.HTTP_200_OK
-        assert len(response.data) == 20
+        assert len(response.data) == 2
+        assert response.data[0]['employees_count'] == 30
+        assert response.data[0]['salary_sum'] == 6000

@@ -1,6 +1,8 @@
 import django_filters
 from rest_framework import viewsets, status, serializers
 
+from django.db.models import Count, Sum
+
 from .models import Employee, Department
 
 
@@ -13,10 +15,12 @@ class EmployeeModelSerializer(serializers.ModelSerializer):
 
 
 class DepartmentModelSerializer(serializers.ModelSerializer):
+    employees_count = serializers.IntegerField()
+    salary_sum = serializers.FloatField()
 
     class Meta:
         model = Department
-        fields = '__all__'
+        fields = ('id', 'title', 'employees_count', 'salary_sum', )
 
 
 class EmployeeFilter(django_filters.FilterSet):
@@ -24,7 +28,7 @@ class EmployeeFilter(django_filters.FilterSet):
 
     class Meta:
         model = Employee
-        fields = ['name', 'department_id', ]
+        fields = ('name', 'department_id', )
 
 
 class EmployeeModelViewSet(viewsets.ModelViewSet):
@@ -34,6 +38,12 @@ class EmployeeModelViewSet(viewsets.ModelViewSet):
 
 
 class DepartmentModelViewSet(viewsets.ModelViewSet):
-    queryset = Department.objects.all()
     serializer_class = DepartmentModelSerializer
     pagination_class = None
+
+    def get_queryset(self):
+        return Department.objects.annotate(
+            employees_count=Count('employees')
+        ).annotate(
+            salary_sum=Sum('employees__salary')
+        )
