@@ -11,9 +11,12 @@ attrs==23.1.0
 django==4.2
     # via
     #   -r requirements.in
+    #   django-extensions
     #   django-filter
     #   djangorestframework
 django-environ==0.10.0
+    # via -r requirements.in
+django-extensions==3.2.1
     # via -r requirements.in
 django-filter==23.2
     # via -r requirements.in
