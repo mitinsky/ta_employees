@@ -18,6 +18,10 @@ def client(api_client):
     return api_client()
 
 @pytest.fixture
+def anon_client(api_anon_client):
+    return api_anon_client()
+
+@pytest.fixture
 def userpic():
     # TODO use tmpdir
     file_obj = BytesIO()
@@ -121,6 +125,10 @@ class TestEmployeesEndpoints:
 
         assert response.status_code == status.HTTP_204_NO_CONTENT
         assert Employee.objects.count() == expected_employees_count
+
+    def test_anon_client_403(self, anon_client):
+        response = anon_client.get(reverse(self.url_list))
+        assert response.status_code == status.HTTP_403_FORBIDDEN
 
 
 class TestDepartmentEndpoints:

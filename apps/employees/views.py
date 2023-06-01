@@ -1,5 +1,7 @@
 import django_filters
 from rest_framework import viewsets, status, serializers
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from django.db.models import Count, Sum
 
@@ -35,11 +37,14 @@ class EmployeeModelViewSet(viewsets.ModelViewSet):
     queryset = Employee.objects.all()
     serializer_class = EmployeeModelSerializer
     filterset_class = EmployeeFilter
+    authentication_classes = [SessionAuthentication, ]
+    permission_classes = [IsAuthenticated, ]
 
 
 class DepartmentModelViewSet(viewsets.ModelViewSet):
     serializer_class = DepartmentModelSerializer
     pagination_class = None
+    permission_classes = [AllowAny, ]
 
     def get_queryset(self):
         return Department.objects.annotate(

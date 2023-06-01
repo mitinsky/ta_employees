@@ -23,3 +23,7 @@ def api_client():
         return client
 
     return return_user_api_client
+
+@pytest.fixture
+def api_anon_client():
+    return APIClient
