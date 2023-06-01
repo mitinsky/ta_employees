@@ -38,7 +38,8 @@ class EmployeeFactory(factory.django.DjangoModelFactory):
     )
     position = factory.LazyAttribute(lambda x: faker.job())
     salary = factory.LazyAttribute(lambda x: faker.random_int(min=1000, max=1000000))
-    birthday = factory.LazyAttribute(lambda x: faker.date_of_birth(minimum_age=16))
+    # birthday = factory.LazyAttribute(lambda x: faker.date_of_birth(minimum_age=16))
+    age = factory.LazyAttribute(lambda x: faker.random_int(min=16, max=120))
     department = factory.SubFactory(DepartmentFactory)
 
     class Meta:

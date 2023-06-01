@@ -6,8 +6,7 @@ class Employee(models.Model):
     photo = models.ImageField()
     position = models.CharField(blank=False, max_length=200)
     salary = models.DecimalField(decimal_places=2, max_digits=11)
-    # TODO лучше хранить дату рождения чем возраст
-    birthday = models.DateField()
+    age = models.IntegerField()
     department = models.ForeignKey('Department', on_delete=models.PROTECT, related_name='employees')
 
     def __str__(self):
@@ -16,8 +15,12 @@ class Employee(models.Model):
 
 class Department(models.Model):
     title = models.CharField(blank=False, max_length=200)
-    # TODO связь с директором лучше сделать через django_guardian, если будет время
-    # director = models.OneToOneField(Employee, on_delete=models.PROTECT, related_name='managed_department')
+    director = models.OneToOneField(
+        Employee,
+        null=True, blank=True,
+        on_delete=models.PROTECT,
+        related_name='managed_department'
+    )
 
     def __str__(self):
         return self.title

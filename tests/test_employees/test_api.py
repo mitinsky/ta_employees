@@ -74,7 +74,8 @@ def new_employee_data(department_first, userpic):
         'photo': userpic,
         'position': 'position',
         'salary': 99999.99,
-        'birthday': '1990-01-01',
+        # 'birthday': '1990-01-01',
+        'age': 30,
         'department': department_first.id,
     }
 
