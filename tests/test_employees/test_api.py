@@ -36,6 +36,10 @@ def department_second(department_factory):
     return department_factory.create()
 
 @pytest.fixture
+def batch_departments_20(department_factory):
+    return department_factory.create_batch(20)
+
+@pytest.fixture
 def batch_employees_20(employee_factory):
     return employee_factory.create_batch(20)
 
@@ -84,7 +88,7 @@ class TestEmployeesEndpoints:
         # TODO exact match target with search
         assert response.data['count'] < 20
 
-    def test_list_filter_department(
+    def test_list_filter_by_department(
             self,
             client,
             department_first,
@@ -109,3 +113,13 @@ class TestEmployeesEndpoints:
 
         assert response.status_code == status.HTTP_204_NO_CONTENT
         assert Employee.objects.count() == expected_employees_count
+
+
+class TestDepartmentEndpoints:
+    url_list = 'department-list'
+
+    def test_list_department(self, client, batch_departments_20):
+        response = client.get(reverse(self.url_list))
+
+        assert response.status_code == status.HTTP_200_OK
+        assert len(response.data) == 20
